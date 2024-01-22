@@ -30,7 +30,7 @@ public class RobotContainer {
     // Non-default Commands using Xbox controllers
     private final SwerveParkCmd swerveParkCmd;
 
-    private double lastKnownTestAngle = 0.0;
+    // private double lastKnownTestAngle = 0.0;
 
     //   One way to define Driver Buttons for use in configureButtonBindings: 
     //   private final zeroGyro = new JoystickButton(m_xbox, XboxController.Button.kY.value);
@@ -56,30 +56,30 @@ public class RobotContainer {
                                           () -> m_xbox.getRightX());   // rotate
         DoNothingCmd m_doNothingAuto = new DoNothingCmd();
         TestAuto m_testAuto = new TestAuto(m_swerveSubsystem);
+        TestSquareAuto m_testSquareAuto = new TestSquareAuto(m_swerveSubsystem);
         
         //m_chooser.addOption("Do nothing: stage out of the way", m_doNothingAuto);
         m_chooser.setDefaultOption("Do Nothing", m_doNothingAuto);
-        m_chooser.addOption("Test patterns ", m_testAuto);
+        m_chooser.addOption("Test Wheel Directions ", m_testAuto);
+        m_chooser.addOption("Auto Square patterns ", m_testSquareAuto);
         SmartDashboard.putData("Autonomous Selection: ", m_chooser);
 
         configureButtonBindings();
     }
-
-    private void parkIt() {
-        SmartDashboard.putString("Debug trace ", "parkIt called");
-        swerveParkCmd.schedule();
-    }
-
+    
+/* Only used for testing
     private void rotateWheelsCCW() {
         lastKnownTestAngle += 45;
         RotateModulesToAngleCmd goCCW = new RotateModulesToAngleCmd(m_swerveSubsystem, lastKnownTestAngle);
         goCCW.schedule();
     }
+
     private void rotateWheelsCW() {
         lastKnownTestAngle -= 45;
         RotateModulesToAngleCmd goCCW = new RotateModulesToAngleCmd(m_swerveSubsystem, lastKnownTestAngle);
         goCCW.schedule();
     }
+*/
 
     //     * Buttons can be created by
     //     * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -89,26 +89,33 @@ public class RobotContainer {
     private void configureButtonBindings() {
         // Driver Buttons
         // The following govern the driving UI:
-        //      POV() == UP     =>  Field oriented (default on start) 
-        //      POV() == DOWN   =>  Robot oriented.
-        //      POV() == LEFT   =>  Rotate 90 deg CW from last angle
-        //      POV() == RIGHT  =>  Rotate 90 deg CCW from last angle
-        //      Back()          =>  Zero the Gyro
-        //      Start()         =>  Test: rotate all modules to angle (0, 45, etc.)
-        //      LeftTrigger     =>  Set Pivot Point to be LF wheel
-        //      RightTrigger    =>  Set Pivot Point to be RF wheel
-        //      Left Bumbper    =>  Set Pivot Point to be BL wheel
-        //      Right Bumper    =>  Set Pivot Point to be BR wheel
-        //      Y()             =>  RESET Pivot Point to be Robot Center
-        //      A()             =>  Slow mode
-        //      B()             =>  Regular speed
+        //      POV() == UP     =>  avail 
+        //      POV() == DOWN   =>  avail
+        //      POV() == LEFT   =>  avail
+        //      POV() == RIGHT  =>  avail
+        //      Back()          =>  Reset all module absolute wheel angles
+        //      Start()         =>  Zero the Gyro
+        //      LeftTrigger     =>  avail
+        //      RightTrigger    =>  avail
+        //      Left Bumbper    =>  Alternate mode selections when held
+        //      Right Bumper    =>  Slow mode when held
+        //      Y()             =>  avail
+        //      A()             =>  avail
+        //      B()             =>  avail
         //      X()             =>  Park (crossed wheel angles)
-
-        m_xbox.povUp().onTrue(new InstantCommand(()-> m_swerveSubsystem.setFieldOriented(true)));
-        m_xbox.povDown().onTrue(new InstantCommand(()-> m_swerveSubsystem.setFieldOriented(false)));
-        m_xbox.povLeft().onTrue(new InstantCommand(()-> rotateWheelsCCW()));
-        m_xbox.povRight().onTrue(new InstantCommand(()-> rotateWheelsCW()));
+        //      L Joystick Y    =>  Translate (move fore/aft)
+        //      L Joystick X    =>  Strafe (move side to side)
+        //      L Joystk Button =>  Set Field Oriented
+        //      R Joystick Y    =>  avail
+        //      R Joystick X    =>  Rotate (left = CCW, right = CW)
+        //      R Joystk Button =>  Set Robot Oriented
+        m_xbox.leftStick().onTrue(new InstantCommand(()-> m_swerveSubsystem.setFieldOriented(true)));
+        m_xbox.rightStick().onTrue(new InstantCommand(()-> m_swerveSubsystem.setFieldOriented(false)));
         /*
+        prior assignments used to trigger rotation about any given corner. Most useful when
+        playing defense. Retained here in case a quick change to defense at competition
+        is needed, and these button controls are no longer needed for offense. Or perhaps
+        they could be re-mapped to POV buttons?
         m_xbox.leftTrigger().onTrue(new InstantCommand(()-> m_swerveSubsystem.setFLCenOfRotation()));
         m_xbox.leftTrigger().onFalse(new InstantCommand(()-> m_swerveSubsystem.resetCenOfRotation()));
         m_xbox.rightTrigger().onTrue(new InstantCommand(()-> m_swerveSubsystem.setFRCenOfRotation()));                                        
@@ -118,15 +125,15 @@ public class RobotContainer {
         m_xbox.rightBumper().onTrue(new InstantCommand(()-> m_swerveSubsystem.setBRCenOfRotation()));
         m_xbox.rightBumper().onFalse(new InstantCommand(()-> m_swerveSubsystem.resetCenOfRotation()));
         */
-        m_xbox.y().onTrue(new TestAuto(m_swerveSubsystem));
-        m_xbox.a().onTrue(new InstantCommand(()-> m_swerveSubsystem.setVarMaxOutputFactor(.075)));
-        m_xbox.b().onTrue(new InstantCommand(()-> m_swerveSubsystem.setVarMaxOutputFactor(.4)));    
-        m_xbox.x().onTrue(new InstantCommand(()->parkIt()));
-        m_xbox.back().onTrue(new InstantCommand(() -> m_swerveSubsystem.zeroGyro()));
+        // TODO - increase VarMaxOutputFactor to .25 on true and 1.0 on false, after testing
+        m_xbox.rightBumper().onTrue(new InstantCommand(()-> m_swerveSubsystem.setVarMaxOutputFactor(.075)));
+        m_xbox.rightBumper().onFalse(new InstantCommand(()-> m_swerveSubsystem.setVarMaxOutputFactor(.4)));    
+        m_xbox.x().onTrue(swerveParkCmd);
+        m_xbox.start().onTrue(new InstantCommand(() -> m_swerveSubsystem.zeroGyro()));
+        m_xbox.back().onTrue(new InstantCommand(() -> m_swerveSubsystem.resetModulesToAbsolute()));
      }
     
     public Command getAutonomousCommand() {
         return m_chooser.getSelected();
-        //return new TestAuto(m_swerveSubsystem);
     }
 } 

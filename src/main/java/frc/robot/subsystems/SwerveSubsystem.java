@@ -18,6 +18,7 @@ import java.text.DecimalFormat;
 import java.util.Map;
 
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
@@ -77,9 +78,10 @@ public class SwerveSubsystem extends SubsystemBase {
         // By pausing init for a second before setting module offsets, we avoid 
         // a bug with inverting motors.
         // See https://github.com/Team364/BaseFalconSwerve/issues/8 for more info.
-        // Timer.delay(1.0);
-        // Update 1/2024 added waitForCANcoder method in SwerveModule to avoid
-        // fixed delay -  i.e. only wait if and as long as necessary.
+        Timer.delay(1.0);
+        // Update 1/2024: also added waitForCANcoder method in SwerveModule, 
+        // which does not hurt but according to above thread the delay is still 
+        // needed, so restored that.
         resetModulesToAbsolute();
 
         m_swerveOdometry = new SwerveDriveOdometry(SDC.SWERVE_KINEMATICS, 

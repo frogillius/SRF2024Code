@@ -84,6 +84,7 @@ public class SwerveModule {
         // continuous controller which CTRE and Rev onboard were not.
         // TODO: Check if that still applies - now that NEO encoder is configured to
         // be continuous and tracks in degrees (using a configured conversion factor)
+        // perhaps the WPILib optimize would be usable as is.
         desiredState = SwerveOptimize.optimize(desiredState, getState().angle); 
         setAngle2d(desiredState);
         setSpeed(desiredState, isOpenLoop);
