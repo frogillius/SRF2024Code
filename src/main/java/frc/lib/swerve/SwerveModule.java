@@ -216,14 +216,13 @@ public class SwerveModule {
         m_steerMotor.enableVoltageCompensation(SDC.STEER_MOTOR_VOLTAGE_COMPENSATION);
         // m_steerMotor.burnFlash();     // Do this durng development, but not
                                          // routinely, to preserve the life of the
-                                         // flash memory. TODO: find out if it is
-                                         // even necessary, since all registers are
-                                         // written on every bootup? BurnFlash may
-                                         // only be needed for stand alone control
-                                         // situations? 
+                                         // flash memory. Is it even necessary, since
+                                         // all registers (except ID?) are written 
+                                         // via code on every bootup?
         resetToAbsolute();
-//
-//  ?      m_steerController.setIZone(kIz);           // should only matter if using kI ?
+
+        // Additional item that may need to be considered for initialization
+        //  ?      m_steerController.setIZone(kIz);
     }
 
     // setSteerKP is called for each module from SwerveDrive subsystem

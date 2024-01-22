@@ -209,10 +209,10 @@ public final class Constants {
         public static final double OUTPUT_DRIVE_LIMIT_FACTOR = 1.00;
         public static final double OUTPUT_ROTATE_LIMIT_FACTOR = 1.00;
 
-        // TODO: Check if the Steering PID output would be better at something
-        // less than -1 to 1
-        public static final double MIN_STEER_CLOSED_LOOP_OUTPUT = -1.0;
-        public static final double MAX_STEER_CLOSED_LOOP_OUTPUT = 1.0;
+        // When monitored while set at -1 to 1, seemed like the Steering PID output 
+        // did not generate percent outputs greater than about .4
+        public static final double MIN_STEER_CLOSED_LOOP_OUTPUT = -0.6;
+        public static final double MAX_STEER_CLOSED_LOOP_OUTPUT = 0.6;
 
         /* Default Motor Neutral Modes */
         public static final CANSparkMax.IdleMode STEER_MOTOR_NEUTRAL_MODE = CANSparkMax.IdleMode.kCoast;
@@ -311,7 +311,7 @@ public final class Constants {
     public static final class AutoC {       // AutoC = short for AutoConstants
         //TODO: The below constants are used in the example auto, and must be tuned to specific robot
         public static final double AUTO_MAX_SPEED_M_PER_SEC = 4.5;
-        public static final double AUTO_MAX_ACCEL_M_PER_SEC2 = 3;   // TODO: tune
+        public static final double AUTO_MAX_ACCEL_M_PER_SEC2 = 3;
         public static final double AUTO_MAX_ANG_VEL_RAD_PER_SEC = 4*Math.PI;
         public static final double AUTO_MAX_ANG_ACCEL_RAD_PER_SEC2 = 2*Math.PI;
 
