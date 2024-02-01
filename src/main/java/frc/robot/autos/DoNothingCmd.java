@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class DoNothingCmd extends CommandBase {
 
   /** Creates a new DoNothingAuto. */
-  public DoNothingCmd() {
+  public DoNothingCmd() { 
   }
 
   // Returns true when the command should end.

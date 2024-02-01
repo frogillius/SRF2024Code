@@ -11,7 +11,7 @@ public class TestAuto extends SequentialCommandGroup {
     SwerveSubsystem m_swerve;
     private static final long waitDelayMs = 200;
  
-    public TestAuto(SwerveSubsystem swerve) {
+    public TestAuto(SwerveSubsystem swerve) { 
         m_swerve = swerve;
 
         addCommands(

@@ -4,7 +4,7 @@ import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderStatusFrame;
 
 /** Sets status frames for the CTRE CANCoder. */
-public class CANCoderUtil {
+public class CANCoderUtil { 
   public enum CCUsage {
     kAll,
     kSensorDataOnly,

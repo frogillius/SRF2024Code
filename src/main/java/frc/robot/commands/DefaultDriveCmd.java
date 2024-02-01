@@ -8,7 +8,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class DefaultDriveCmd extends CommandBase {    
+public class DefaultDriveCmd extends CommandBase {     
     private SwerveSubsystem m_swerveDrive;    
     private DoubleSupplier m_translationSup;
     private DoubleSupplier m_strafeSup;

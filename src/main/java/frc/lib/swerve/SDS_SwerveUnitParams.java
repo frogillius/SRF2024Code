@@ -4,7 +4,7 @@ package frc.lib.swerve;
 // Takes values and required settings that are constant for a given SDS
 // swerve module type, but which may differ from other SDS swerve module types, 
 // and stores them as a set of constants (with generic symbolics) so that the 
-// symbolics used for writing drivetrain code can be universal, regardless 
+// symbolics used for writing drivetrain code can be universal, regardless  
 // of SDS module type being used.
 public class SDS_SwerveUnitParams {
     public final double WHEEL_DIAMETER_M;

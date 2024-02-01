@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import frc.robot.RobotContainer;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class RumbleCmd extends CommandBase {
+public class RumbleCmd extends CommandBase { 
   private XboxController m_xbox;
   private int m_whichSide;
   private double m_amplitude;

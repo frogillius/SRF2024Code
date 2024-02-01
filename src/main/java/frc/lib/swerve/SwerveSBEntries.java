@@ -7,7 +7,7 @@ package frc.lib.swerve;
 import java.text.DecimalFormat;
 
 import edu.wpi.first.networktables.GenericEntry;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout; 
 
 /** Add your docs here. */
 public class SwerveSBEntries {

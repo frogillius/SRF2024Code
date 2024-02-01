@@ -4,7 +4,7 @@ import edu.wpi.first.math.MathUtil;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.*;
 
-public class UISupport {
+public class UISupport { 
 
     public UISupport() {}  // revent any instances from being created
                         

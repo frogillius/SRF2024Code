@@ -17,7 +17,7 @@ import java.util.function.DoubleSupplier;
 // The command remains active until one of the joystick
 // suppliers exceeeds the dead-band tolerance.
 
-public class SwerveParkCmd extends CommandBase {
+public class SwerveParkCmd extends CommandBase { 
   private SwerveSubsystem m_swerveSubsystem;    
   private DoubleSupplier m_translationSup;
   private DoubleSupplier m_strafeSup;
