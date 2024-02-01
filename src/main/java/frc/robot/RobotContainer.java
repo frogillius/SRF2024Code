@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -25,7 +26,7 @@ public class RobotContainer {
     private final SendableChooser<Command> m_chooser = new SendableChooser<>();
 
     // Xbox Controllers
-    private final CommandXboxController m_xbox;
+    private static CommandXboxController m_xbox;
 
     // Non-default Commands using Xbox controllers
     private final SwerveParkCmd swerveParkCmd;
@@ -67,6 +68,10 @@ public class RobotContainer {
         configureButtonBindings();
     }
     
+public static XboxController getHidXboxCtrl(){
+    return m_xbox.getHID();
+}
+
 /* Only used for testing
     private void rotateWheelsCCW() {
         lastKnownTestAngle += 45;
@@ -127,7 +132,7 @@ public class RobotContainer {
         */
         // TODO - increase VarMaxOutputFactor to .25 on true and 1.0 on false, after testing
         m_xbox.rightBumper().onTrue(new InstantCommand(()-> m_swerveSubsystem.setVarMaxOutputFactor(.075)));
-        m_xbox.rightBumper().onFalse(new InstantCommand(()-> m_swerveSubsystem.setVarMaxOutputFactor(.4)));    
+        m_xbox.rightBumper().onFalse(new InstantCommand(()-> m_swerveSubsystem.setVarMaxOutputFactor(1.0)));    
         m_xbox.x().onTrue(swerveParkCmd);
         m_xbox.start().onTrue(new InstantCommand(() -> m_swerveSubsystem.zeroGyro()));
         m_xbox.back().onTrue(new InstantCommand(() -> m_swerveSubsystem.resetModulesToAbsolute()));
@@ -136,4 +141,4 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         return m_chooser.getSelected();
     }
-} 
+}

@@ -18,6 +18,7 @@ import java.text.DecimalFormat;
 import java.util.Map;
 
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -27,6 +28,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SwerveSubsystem extends SubsystemBase {
+    public DigitalOutput signalOut1 = new DigitalOutput(1);
+
     private SwerveDriveOdometry m_swerveOdometry;
     private SwerveModule[] m_swerveMods;
     private SwerveModuleState[] m_states = new SwerveModuleState[4];
@@ -53,6 +56,7 @@ public class SwerveSubsystem extends SubsystemBase {
     private GenericEntry        m_steerKPEntry;
 
     private double m_steerKP;
+    private int m_count = 0;
 
     DecimalFormat df1 = new DecimalFormat("#.#");
     DecimalFormat df2 = new DecimalFormat("#.##");
@@ -120,6 +124,8 @@ public class SwerveSubsystem extends SubsystemBase {
     public void drive(Translation2d translation, 
                       double rotation, 
                       boolean isOpenLoop) {
+        // Output pulse on DIO_1 for oscilloscope viewing
+        signalOut1.set(true);   // On entry drive pin high
         translation = translation.times(m_varMaxOutputFactor * m_fixedMaxTranslationOutput);
         rotation = rotation * m_varMaxOutputFactor * m_fixedMaxRotationOutput;
        
@@ -143,6 +149,9 @@ public class SwerveSubsystem extends SubsystemBase {
         for (SwerveModule mod : m_swerveMods) {
             mod.setDesiredState(swerveModuleStates[mod.m_modNum], isOpenLoop);
         }
+
+        // Kill the pulse on DIO_1
+        signalOut1.set(false);
     }  
 
     /* Used by SwerveControllerCommand in Auto */
@@ -284,6 +293,7 @@ public class SwerveSubsystem extends SubsystemBase {
         }
         // m_gyroPitchEntry
         // m_gyroRollEntry
+ 
         for(SwerveModule mod : m_swerveMods) {
             mod.publishModuleData();
         }
@@ -312,11 +322,19 @@ public class SwerveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        // Update odometry on every loop instance
         m_swerveOdometry.update(getYaw(), getModulePositions());  
-        if (SDC.STEER_KP_TUNING_ENABLED) { 
-            checkSteerKP();
+
+        // Reduce the data bandwidth used for telemetry by only 
+        // publishing and/or checking for input every 15 loops, 
+        // i.e. every 300 ms.
+        m_count++;
+        if ((m_count % 15) < .001) {
+            if (SDC.STEER_KP_TUNING_ENABLED) { 
+                checkSteerKP();
+            }
+            publishSwerveDriveData();
         }
-        publishSwerveDriveData();
     }
 
     // This is a test routine, designed to rotate all modules

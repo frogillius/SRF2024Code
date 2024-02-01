@@ -4,7 +4,16 @@
 
 package frc.robot;
 
+
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.TimedRobot;
+/*
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+*/
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -18,7 +27,19 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+/*
+  public static PowerDistribution pdp = new PowerDistribution();
 
+  ShuffleboardTab voltageTab = Shuffleboard.getTab("Power Monitor");
+
+  GenericEntry voltageEntry = voltageTab.add("Battery Voltage", 0)
+                                        .withWidget(BuiltInWidgets.kGraph)
+                                        .withPosition(0,0)
+                                        .withSize(5,3)
+                                        .getEntry();
+*/
+  DigitalOutput signalOut0 = new DigitalOutput(0);
+  
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -28,6 +49,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    // SmartDashboard.putBoolean("Default DIO State", signalOut0.get());
   }
 
   /**
@@ -39,11 +61,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    signalOut0.set(true);
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    //voltageEntry.setDouble(pdp.getVoltage());
+    //SmartDashboard.putNumber("Batt Voltage", pdp.getVoltage());
+    signalOut0.set(false);
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

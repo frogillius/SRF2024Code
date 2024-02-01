@@ -25,7 +25,8 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class TestSquareAuto extends SequentialCommandGroup {
     SwerveSubsystem m_swerve;
- 
+    private static final double CF = 1/1.29 / (2.54*100);
+
     public TestSquareAuto (SwerveSubsystem swerve) {
         m_swerve = swerve;
 
@@ -48,14 +49,15 @@ public class TestSquareAuto extends SequentialCommandGroup {
             // Start at the origin facing the +X direction, on the near right 
             // corner of the intended square (the first time through move 
             // counterclockwise)
+
             new Pose2d(0, 0, new Rotation2d(0)),
-            List.of(new Translation2d(1.0, 0.0),  // Pass through 1M forward
-                    new Translation2d(2.0, 0.0),  // Waypt at 2M forward
-                    new Translation2d(2.0, 1.0),  // Pass thru 1M west
-                    new Translation2d(2.0, 2.0),  // Waypt at 2M, 2M
-                    new Translation2d(1.0, 2.0),  // back up thru 1M
-                    new Translation2d(0.0, 2.0),  // Waypt at 0, 2M
-                    new Translation2d(0.0, 1.0)), // Move east thru 1M
+            List.of(new Translation2d(1.0, 0.0).times(CF),  // Pass through 1M forward
+                    new Translation2d(2.0, 0.0).times(CF),  // Waypt at 2M forward
+                    new Translation2d(2.0, 1.0).times(CF),  // Pass thru 1M west
+                    new Translation2d(2.0, 2.0).times(CF),  // Waypt at 2M, 2M
+                    new Translation2d(1.0, 2.0).times(CF),  // back up thru 1M
+                    new Translation2d(0.0, 2.0).times(CF),  // Waypt at 0, 2M
+                    new Translation2d(0.0, 1.0).times(CF)), // Move east thru 1M
             // And end where we started, facing forward
             new Pose2d(0.0, 0.0, new Rotation2d(0.0)),
             config);

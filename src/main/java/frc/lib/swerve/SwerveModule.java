@@ -7,6 +7,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import java.text.DecimalFormat;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -276,6 +277,7 @@ public class SwerveModule {
         return m_driveMotor.getSelectedSensorPosition();
     }
 
+    // Called from SwerveSubsystem when time to publish
     public void publishModuleData() {
         // Wheel direction (steer) setpoint
         m_moduleSBEntries.getSteerSetpointDegEntry().setString(
