@@ -46,7 +46,7 @@ public class RumbleCmd extends CommandBase {
       m_amplitude = 0.0;
     }
 
-    if ((durationTimeMs > 0) && (durationTimeMs < 10000)) {
+    if ((durationTimeMs > 0) && (durationTimeMs < 1000)) {
       m_runDurationMillis = durationTimeMs;
     } else {
       m_runDurationMillis = 0;
