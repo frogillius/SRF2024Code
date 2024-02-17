@@ -77,18 +77,27 @@ public class AutoPathTestCmd extends SequentialCommandGroup {
                 new Pose2d(0.0, 0.0, new Rotation2d(0.0)),
                            config);
 
-        Trajectory curveTest2 =
-            TrajectoryGenerator.generateTrajectory(
-                // Start Pose must be the same as the current location of the 
-                // Robot, i..e the same  as the end of curveTest1 
-                new Pose2d(0.0, 0.0, new Rotation2d(0.0)),
-                List.of(new Translation2d(0.0, 0.0),
-                        new Translation2d(0.0, 0.0),
-                        new Translation2d(0.0, 0.0)
-                       ),
-                // End of 2nd curve
-                new Pose2d(0.0, 0.0, new Rotation2d(0.0)),
-                           config);
+                           Trajectory curveTest2 =
+                           TrajectoryGenerator.generateTrajectory(
+                               // Start Pose must be the same as the current location of the 
+                               // Robot, i..e the same  as the end of curveTest1 
+               
+                               // TODO: generateTrajectory(interiorWaypoints) only supports Translation2d, we need to fit Pose2d in it.
+                               // TODO: Add angles for all the Pose2d entries.
+               
+                               new Pose2d(0.736, 1.250, new Rotation2d(0.0)),
+                               new Pose2d(0.405, 0.971, new Rotation2d(0.0)),
+                               new Pose2d(0.311, 0.799, new Rotation2d(0.0)),
+                               new Pose2d(0.271, 0.676, new Rotation2d(0.0)),
+                               new Pose2d(0.246, 0.473, new Rotation2d(0.0)),
+                               new Pose2d(0.259, 0.325, new Rotation2d(0.0)),
+                               new Pose2d(0.294, 0.190, new Rotation2d(0.0)),
+                               new Pose2d(0.332, 0.099, new Rotation2d(0.0)),
+                               new Pose2d(0.388, 0.000, new Rotation2d(0.0)),
+                               
+                               // End of 2nd curve
+                               new Pose2d(0.0, 0.0, new Rotation2d(0.0)),
+                                          config);
 
         Trajectory curveTest3 =
             TrajectoryGenerator.generateTrajectory(
