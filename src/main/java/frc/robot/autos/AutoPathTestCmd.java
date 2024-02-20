@@ -85,7 +85,7 @@ public class AutoPathTestCmd extends SequentialCommandGroup {
                                // TODO: generateTrajectory(interiorWaypoints) only supports Translation2d, we need to fit Pose2d in it.
                                // TODO: Add angles for all the Pose2d entries.
                
-                               new Pose2d(0.736, 1.250, new Rotation2d(0.0)),
+                               new Pose2d(0.736, 1.250, new Rotation2d(90.0)),
                                new Pose2d(0.405, 0.971, new Rotation2d(0.0)),
                                new Pose2d(0.311, 0.799, new Rotation2d(0.0)),
                                new Pose2d(0.271, 0.676, new Rotation2d(0.0)),
