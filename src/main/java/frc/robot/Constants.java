@@ -31,6 +31,12 @@ public final class Constants {
         // set INVERT_GYRO = true; // because NavX measures CCW as negative.
     }
 
+    public static final class LDC {              // LC = short for LidarConstants
+        public static final int LIDARDIST = 15; // Detection distance of the Lidar scanner in cm.
+        public static final int LIDARPORT = 0; // The port to open for the Lidar scanner.
+
+    }
+
     public static final class SDC {             // SDC = short for SwerveDriveConstants
         // Start with differentiating SDS module types MK4 and MK4I
         // Swerve Drive Specialties: MK4-L2 Module
