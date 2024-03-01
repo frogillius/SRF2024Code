@@ -1,0 +1,3 @@
+This is some handy info about the LIDARLite v3
+
+In most cases the reason they are not seeing any communications is that their code is performing a “Repeated Start” function during the read operation. The sensor doesn’t recognize this command. Instead they will need to do a read, followed by a stop, a start command and then another read.
